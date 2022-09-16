@@ -1,9 +1,6 @@
 var today = moment();
 var currentHour = moment().hours();
-var inputEl = $('.description');
 var saveBtn = $('.saveBtn')
-
-console.log (currentHour)
 
 //updates time at top
 $("#currentDay").text(today.format("dddd, MMMM Do, YYYY"));
@@ -13,7 +10,6 @@ function setBlockColor () {
 
     $('.description').each(function() {
         var hour = parseInt($(this).attr('id'));
-        console.log(hour)
         if (currentHour < hour) {
             $(this).addClass('future');
         } else if (currentHour === hour) {
@@ -22,22 +18,28 @@ function setBlockColor () {
             $(this).addClass('past');
         }
     })
+};
+
+
+//function saves time and TODOs to local storage
+saveBtn.on("click", function() {
+    var time = $(this).attr("class").split(" ")[2]
+
+    var task = $("#" + time).val()
     
-}
+    localStorage.setItem(time, task)
 
-// saveBtn.addEventListener("click", function() {
+    }
+);
 
+//function gets each save from local storage
+function getSave() {
+    for (var i = 9; i < 17; i++) {
+        $("#" + i).val(localStorage.getItem(i))
 
-
-// })
-
-
+    }
+};
 
 
 setBlockColor()
-
-//var time = moment("09:00:00 am")
-//now.diff(time, "hours")
-
-
-//
+getSave()
